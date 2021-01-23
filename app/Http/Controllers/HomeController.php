@@ -13,9 +13,15 @@ class HomeController extends VehicleAbs implements Vehicle
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, VehicleTrait;
 
+
     //this is Interface method
     public function capcity(){
-        return view('interface');
+
+        $test = $this->returnValue();
+
+        return view('interface',[
+            'data' => $test
+        ]);
     }
 
     //this is Abstract Method
