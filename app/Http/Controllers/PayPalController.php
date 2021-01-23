@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendEmail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Agreement;
@@ -117,6 +119,7 @@ class PayPalController extends Controller
         //return $result->getState();
         if ($result->getState() == 'approved') {
             session()->flash('success', 'Payment success');
+            Mail::to('test@email.com')->send(new SendEmail($result));
             /** clear the session payment ID **/
             Session::forget('paypal_payment_id');
             return Redirect::route('/');
